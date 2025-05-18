@@ -2,7 +2,8 @@
     "title": "The light cap",
     "content": [
         {"header": "The light cap"},
-        {"paragraph": "The light cap is a device that allows you to see in the dark."},
+        {"paragraph": "The Light Cap lets you see your keyboard while coding on the go at night."},
+        {"paragraph": "It also lets you hunt animals at night."},
         {"image": "light-cap.jpeg"},
         {"link": "https://www.google.com"},
         {"code": "console.log('Hello, World!');"},
