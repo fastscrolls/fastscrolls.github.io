@@ -1,0 +1,12 @@
+{
+    "title": "The light cap",
+    "category": "The light cap",
+    "content": [
+        {"header": "The light cap"},
+        {"paragraph": "The light cap is a device that allows you to see in the dark."},
+        {"image": "light-cap.jpeg"},
+        {"link": "https://www.google.com"},
+        {"code": "console.log('Hello, World!');"},
+        {"embed": "https://www.youtube.com/embed/Pzl1B7nB9Kc"}
+    ]
+} 
