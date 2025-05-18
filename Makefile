@@ -1,10 +1,11 @@
 OUTDIR := dist
 TEMPLATES := templates
 SCRIPTS := scripts
+PUBLIC := public
 
 .PHONY: all clean
 
-all: $(OUTDIR)
+all: $(OUTDIR) $(OUTDIR)/index.html copy-public
 	@echo "Building pages..."
 	@for json in pages/*.json; do \
 		filename=$$(basename $$json .json); \
@@ -14,8 +15,23 @@ all: $(OUTDIR)
 			-v template="$(TEMPLATES)/template.html" > $(OUTDIR)/$$filename.html; \
 	done
 
+$(OUTDIR)/index.html: $(TEMPLATES)/gallery.html $(SCRIPTS)/generate_gallery.awk $(wildcard pages/*.json)
+	@echo "Generating gallery..."
+	@for json in pages/*.json; do \
+		echo "$$json:$$(jq -r '.title' "$$json"):$$(jq -r '.category' "$$json"):$$(jq -r '.content[] | select(.image != null) | .image' "$$json" | head -1)"; \
+	done | awk -f $(SCRIPTS)/generate_gallery.awk -v template="$(TEMPLATES)/gallery.html" > $(OUTDIR)/index.html
+
 $(OUTDIR):
 	mkdir -p $(OUTDIR)
+
+copy-public: $(OUTDIR)
+	@echo "Copying public assets..."
+	@if [ -d "$(PUBLIC)" ]; then \
+		cp -r $(PUBLIC)/* $(OUTDIR)/; \
+	else \
+		mkdir -p $(PUBLIC); \
+		echo "Created public directory. Place your images and other assets here."; \
+	fi
 
 clean:
 	rm -rf $(OUTDIR)/* 

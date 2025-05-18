@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0px;
+            background: #fff;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #eee;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            background-color: #ffffffec;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <a href="sample.html" class="card">
+    <div style="position: relative;">
+        <img class="card-image" src="light-cap.jpeg" alt="The light cap">
+        <p class="card-title" style="position: absolute; bottom: 0; left: 0; right: 0; margin: 0; padding: 0px;">The light cap</p>
+    </div>
+</a>
+
+    </div>
+</body>
+</html> 
+
