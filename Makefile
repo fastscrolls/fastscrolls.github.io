@@ -7,17 +7,19 @@ PUBLIC := public
 
 all: $(OUTDIR) $(OUTDIR)/index.html copy-public
 	@echo "Building pages..."
-	@for json in pages/*.json; do \
+	@find pages -name "*.json" | while read json; do \
 		filename=$$(basename $$json .json); \
+		category=$$(dirname $$json | sed 's|^pages/||'); \
+		mkdir -p $(OUTDIR)/$$category; \
 		jq -r '.content[] | to_entries[] | "\(.key) \(.value)"' $$json | \
 		awk -f $(SCRIPTS)/process_content.awk -v title="$$(jq -r '.title' $$json)" \
 			-v category="$$(jq -r '.category' $$json)" \
-			-v template="$(TEMPLATES)/template.html" > $(OUTDIR)/$$filename.html; \
+			-v template="$(TEMPLATES)/template.html" > $(OUTDIR)/$$category/$$filename.html; \
 	done
 
-$(OUTDIR)/index.html: $(TEMPLATES)/gallery.html $(SCRIPTS)/generate_gallery.awk $(wildcard pages/*.json)
+$(OUTDIR)/index.html: $(TEMPLATES)/gallery.html $(SCRIPTS)/generate_gallery.awk $(shell find pages -name "*.json")
 	@echo "Generating gallery..."
-	@for json in pages/*.json; do \
+	@find pages -name "*.json" | while read json; do \
 		echo "$$json:$$(jq -r '.title' "$$json"):$$(jq -r '.category' "$$json"):$$(jq -r '.content[] | select(.image != null) | .image' "$$json" | head -1)"; \
 	done | awk -f $(SCRIPTS)/generate_gallery.awk -v template="$(TEMPLATES)/gallery.html" > $(OUTDIR)/index.html
 
