@@ -16,3 +16,5 @@ The JSON file has the following format:
     ]
 }
 ```
+
+Then it should turn the JSON file into a static HTML page in OUTIDIR, defined in the Makefile.
